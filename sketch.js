@@ -1,39 +1,38 @@
-
-var trex, trex_running, trex_collided;
-var ground, invisibleGround, groundImage;
+var sea,ship;
+var seaImg,shipImg;
 
 function preload(){
-  trex_running = loadAnimation("trex1.png","trex3.png","trex4.png");
+  seaImg = loadImage("sea.png");
+  shipImg1 = loadAnimation("ship-1.png","ship-2.png","ship-1.png","ship-1.png");
+  shipImg2 = loadAnimation("ship-3.png","ship-4.png","ship-3.png","ship-3.png");
 }
 
-function setup() {
-  createCanvas(600, 200);
+function setup(){
+  createCanvas(400,400);
+  background("blue");
   
-  //create a trex sprite
-  trex = createSprite(50,180,20,50);
-  trex.addAnimation("running", trex_running);
+sea=createSprite(400,200);
+sea.addImage(seaImg);
+sea.velocityX = -3;
+sea.scale=0.3;
+
+ship = createSprite(120,200,30,30);
+ship.addAnimation("jumpingShip",shipImg1);
+ship.scale =0.25;
   
-  //adding scale and position to trex
-  trex.scale = 0.5;
-  trex.x = 50
-  
-  //create ground sprite
-  ground = createSprite(200,180,400,20);
- 
 }
 
 function draw() {
-  background(220);
- 
-  //jumping the trex on space key press
-  if(keyDown("space")) {
-    trex.velocityY = -10;
+  background(0);
+  sea.velocityX = -3;
+
+  if(sea.x < 0){
+    sea.x = sea.width/8;
   }
   
-  trex.velocityY = trex.velocityY + 0.8
+  if(keyDown("space")) {
+    ship.addAnimation("jumpingShip",shipImg2);
+  }
   
- 
- //stop trex from falling down 
-  trex.collide(ground);
-  drawSprites();
+  drawSprites()
 }
